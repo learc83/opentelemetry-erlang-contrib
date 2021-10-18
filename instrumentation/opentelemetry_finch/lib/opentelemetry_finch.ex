@@ -84,6 +84,8 @@ defmodule OpentelemetryFinch do
       # method: meta.method
     ]
 
+    IO.puts("handle request start!!!!!!!!!!!!!")
+
     OpentelemetryTelemetry.start_telemetry_span( @tracer_id, "#{meta.host}:#{meta.port}", meta, %{})
     |> Span.set_attributes(attributes)
   end
@@ -93,6 +95,7 @@ defmodule OpentelemetryFinch do
     # ensure the correct span is current and update the status
     ctx = OpentelemetryTelemetry.set_current_telemetry_span(@tracer_id, meta)
 
+    IO.puts("handle request stop!!!!!!!!!!!!!")
     # TODO handle optional error
     # Span.set_attribute(ctx, :error, meta.error)
 
