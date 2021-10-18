@@ -57,7 +57,7 @@ defmodule OpentelemetryFinch do
   @doc false
   def attach_request_start_handler() do
     :telemetry.attach(
-      {__MODULE__, :endpoint_start},
+      {__MODULE__, :request_start},
       [:finch, :connect, :start],
       &__MODULE__.handle_request_start/4,
       %{}
@@ -67,7 +67,7 @@ defmodule OpentelemetryFinch do
   @doc false
   def attach_request_stop_handler() do
     :telemetry.attach(
-      {__MODULE__, :endpoint_end},
+      {__MODULE__, :request_end},
       [:finch, :connect, :stop],
       &__MODULE__.handle_request_stop/4,
       %{}
@@ -80,11 +80,11 @@ defmodule OpentelemetryFinch do
       scheme: meta.scheme,
       host: meta.host,
       port: meta.port,
-      path: meta.path,
+      # path: meta.path,
       method: meta.method
     ]
 
-    OpentelemetryTelemetry.start_telemetry_span( @tracer_id, "#{meta.host}:#{meta.port}/#{meta.path}", meta, %{})
+    OpentelemetryTelemetry.start_telemetry_span( @tracer_id, "#{meta.host}:#{meta.port}", meta, %{})
     |> Span.set_attributes(attributes)
   end
 
