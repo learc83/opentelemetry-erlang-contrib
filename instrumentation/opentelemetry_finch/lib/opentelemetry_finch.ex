@@ -93,7 +93,8 @@ defmodule OpentelemetryFinch do
     # ensure the correct span is current and update the status
     ctx = OpentelemetryTelemetry.set_current_telemetry_span(@tracer_id, meta)
 
-    Span.set_attribute(ctx, :error, meta.error)
+    # TODO handle optional error
+    # Span.set_attribute(ctx, :error, meta.error)
 
     # TODO check for meta.error
     # if conn.status >= 400 do
