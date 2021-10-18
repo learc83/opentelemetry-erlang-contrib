@@ -47,6 +47,10 @@ defmodule OpentelemetryFinch do
     :ok
   end
 
+  def request_transformer(req) do
+    %{req | headers: :otel_propagator_text_map.inject(req.headers)}
+  end
+
   # defp ensure_opts(opts), do: Keyword.merge(default_opts(), opts)
 
   # defp default_opts do
@@ -79,14 +83,14 @@ defmodule OpentelemetryFinch do
     attributes = [
       scheme: meta.scheme,
       host: meta.host,
-      port: meta.port,
+      port: meta.port
       # path: meta.path,
       # method: meta.method
     ]
 
     IO.puts("handle request start!!!!!!!!!!!!!")
 
-    OpentelemetryTelemetry.start_telemetry_span( @tracer_id, "#{meta.host}:#{meta.port}", meta, %{})
+    OpentelemetryTelemetry.start_telemetry_span(@tracer_id, "#{meta.host}:#{meta.port}", meta, %{})
     |> Span.set_attributes(attributes)
   end
 
