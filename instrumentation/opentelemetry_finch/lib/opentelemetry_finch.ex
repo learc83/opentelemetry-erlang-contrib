@@ -81,7 +81,7 @@ defmodule OpentelemetryFinch do
       host: meta.host,
       port: meta.port,
       # path: meta.path,
-      method: meta.method
+      # method: meta.method
     ]
 
     OpentelemetryTelemetry.start_telemetry_span( @tracer_id, "#{meta.host}:#{meta.port}", meta, %{})
